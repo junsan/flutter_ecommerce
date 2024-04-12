@@ -5,6 +5,12 @@ void main() {
   runApp(const MyApp());
 }
 
+final List<String> imgList = [
+   'images/slider_1.jpg',
+   'images/slider_2.jpg',
+   'images/slider_3.jpg'
+];
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -15,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF0E2C3D)),
         useMaterial3: true,
       ),
       home: Scaffold(
@@ -28,7 +34,16 @@ class MyApp extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        body: Row(),
+        body: Container(
+            child: CarouselSlider(
+              options: CarouselOptions(
+                autoPlay: true,
+                aspectRatio: 2.0,
+                enlargeCenterPage: true,
+              ),
+              items: imageSliders,
+            ),
+          ),
         )
     );
   }
@@ -106,3 +121,52 @@ class NavDrawer extends StatelessWidget {
     );
   }
 }
+
+final List<Widget> imageSliders = imgList
+    .map((item) => Container(
+          child: Container(
+            margin: EdgeInsets.all(5.0),
+            child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                child: Stack(
+                  children: <Widget>[
+                    Image.network(item, fit: BoxFit.cover, width: 1000.0),
+                    Positioned(
+                      bottom: 0.0,
+                      left: 0.0,
+                      right: 0.0,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 20.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Men\'s Fashion',
+                              style: TextStyle(
+                                color: Color(0xFF0E2C3D),
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            TextButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStatePropertyAll<Color>(Color(0xFF3889CC)),
+                                
+                              ),
+                              onPressed: () {
+
+                            }, 
+                              child: Text('Shop Now', style: TextStyle(color: Colors.white),) 
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
+          ),
+        ))
+    .toList();
